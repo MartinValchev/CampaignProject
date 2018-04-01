@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.campaignproject.web.website.WebsiteBrowse"
+        focusComponent="websitesTable"
+        lookupComponent="websitesTable"
+        messagesPack="com.company.campaignproject.web.website">
+    <dsContext>
+        <groupDatasource id="websitesDs"
+                         class="com.company.campaignproject.entity.Website"
+                         view="website-view">
+            <query>
+                <![CDATA[select e from campaignproject$Website e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="websitesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="websitesTable"
+                datasource="websitesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="websitesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="webversion"/>
+            </columns>
+            <rows datasource="websitesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="websitesTable.create"/>
+                <button id="editBtn"
+                        action="websitesTable.edit"/>
+                <button id="removeBtn"
+                        action="websitesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

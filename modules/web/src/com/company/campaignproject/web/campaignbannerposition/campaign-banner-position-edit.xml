@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.campaignproject.web.campaignbannerposition.CampaignBannerPositionEdit"
+        datasource="campaignBannerPositionDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.campaignproject.web.campaignbannerposition">
+    <dsContext>
+        <datasource id="campaignBannerPositionDs"
+                    class="com.company.campaignproject.entity.CampaignBannerPosition"
+                    view="campaignBannerPosition-view"/>
+        <collectionDatasource id="bannerPositionsDs"
+                              class="com.company.campaignproject.entity.BannerPosition"
+                              view="bannerPosition-view">
+            <query>
+                <![CDATA[select e from campaignproject$BannerPosition e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode forceDialog="true"
+                height="800"
+                width="600"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="campaignBannerPositionDs"
+                    width="450px">
+            <column width="300px">
+                <field caption="Banner position"
+                       optionsDatasource="bannerPositionsDs"
+                       property="bannerPosition"/>
+                <field property="impressions"/>
+                <field property="startDate"/>
+                <field property="endDate"/>
+            </column>
+        </fieldGroup>
+        <button caption="removeOccupacyRec"
+                invoke="onUpdateRecordBtnClick"/>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

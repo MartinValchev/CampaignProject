@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.campaignproject.web.website.WebsiteEdit"
+        datasource="websiteDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.campaignproject.web.website">
+    <dsContext>
+        <datasource id="websiteDs"
+                    class="com.company.campaignproject.entity.Website"
+                    view="website-view">
+            <groupDatasource id="bannerPositionNewDs"
+                             property="bannerPosition"/>
+        </datasource>
+        <groupDatasource id="bannerPositionsDs"
+                         class="com.company.campaignproject.entity.BannerPosition"
+                         view="bannerPosition-view">
+            <query>
+                <![CDATA[select e from campaignproject$BannerPosition e
+where e.website.id =:ds$websiteDs
+order by e.name]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="websiteDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="webversion"/>
+            </column>
+        </fieldGroup>
+        <buttonsPanel>
+            <button id="createBtn"
+                    action="bannerPositionTable.create"
+                    caption="Create"/>
+            <button id="editBtn"
+                    action="bannerPositionTable.edit"
+                    caption="Edit"/>
+            <button id="removeBtn"
+                    action="bannerPositionTable.remove"/>
+        </buttonsPanel>
+        <groupTable id="bannerPositionTable"
+                    height="250px"
+                    width="400px">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="impressionsLimit"/>
+            </columns>
+            <rows datasource="bannerPositionNewDs"/>
+        </groupTable>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

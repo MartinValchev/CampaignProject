@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+    <view class="com.company.campaignproject.entity.Campaign"
+          extends="_local"
+          name="campaign-view">
+        <property name="campaignBannerPosition"
+                  view="_minimal">
+            <property name="startDate"/>
+            <property name="endDate"/>
+            <property name="bannerPosition"
+                      view="_minimal">
+                <property name="impressionsLimit"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.company.campaignproject.entity.BannerPosition"
+          extends="_local"
+          name="bannerPosition-view">
+        <property name="website"
+                  view="_minimal">
+        </property>
+    </view>
+    <view class="com.company.campaignproject.entity.CampaignBannerPosition"
+          extends="_local"
+          name="campaignBannerPosition-view">
+        <property name="bannerPosition"
+                  view="_minimal">
+            <property name="impressionsLimit"/>
+        </property>
+    </view>
+    <view class="com.company.campaignproject.entity.Website"
+          extends="_local"
+          name="website-view">
+        <property name="bannerPosition"
+                  view="_minimal">
+            <property name="impressionsLimit"/>
+        </property>
+    </view>
+    <view class="com.company.campaignproject.entity.BannerPositionOccupacy"
+          extends="_local"
+          name="bannerPositionOccupacy-view">
+        <property name="bannerPosition"
+                  view="_minimal">
+            <property name="impressionsLimit"/>
+            <property name="website"
+                      view="_minimal">
+                <property name="webversion"/>
+            </property>
+        </property>
+    </view>
+</views>

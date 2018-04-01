@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.campaignproject.web.bannerposition.BannerPositionBrowse"
+        focusComponent="bannerPositionsTable"
+        lookupComponent="bannerPositionsTable"
+        messagesPack="com.company.campaignproject.web.bannerposition">
+    <dsContext>
+        <groupDatasource id="bannerPositionsDs"
+                         class="com.company.campaignproject.entity.BannerPosition"
+                         view="bannerPosition-view">
+            <query>
+                <![CDATA[select e from campaignproject$BannerPosition e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="bannerPositionsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="bannerPositionsTable"
+                datasource="bannerPositionsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="bannerPositionsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="impressionsLimit"
+                        caption="Impressions Limit"/>
+                <column id="website"/>
+            </columns>
+            <rows datasource="bannerPositionsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="bannerPositionsTable.create"/>
+                <button id="editBtn"
+                        action="bannerPositionsTable.edit"/>
+                <button id="removeBtn"
+                        action="bannerPositionsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

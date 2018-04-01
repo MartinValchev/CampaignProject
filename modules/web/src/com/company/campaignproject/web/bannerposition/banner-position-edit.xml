@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.campaignproject.web.bannerposition.BannerPositionEdit"
+        datasource="bannerPositionDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.campaignproject.web.bannerposition">
+    <dsContext>
+        <datasource id="bannerPositionDs"
+                    class="com.company.campaignproject.entity.BannerPosition"
+                    view="bannerPosition-view"/>
+        <collectionDatasource id="websitesDs"
+                              class="com.company.campaignproject.entity.Website"
+                              view="website-view">
+            <query>
+                <![CDATA[select e from campaignproject$Website e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode forceDialog="true"
+                height="300"
+                width="600"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="bannerPositionDs">
+            <column width="250px">
+                <field property="name"/>
+                <field property="impressionsLimit"/>
+                <field caption="Website"
+                       datasource="bannerPositionDs"
+                       optionsDatasource="websitesDs"
+                       property="website"
+                       visible="false"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

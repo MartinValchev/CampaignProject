@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application-campaignproject"
+          insertBefore="administration">
+        <item id="testFrame"
+              openType="NEW_TAB"
+              screen="testFrame"/>
+        <item screen="campaignproject$Campaign.browse"/>
+        <item screen="campaignproject$BannerPosition.browse"/>
+        <item screen="campaignproject$Website.browse"/>
+        <item screen="OccupacyRecords"/>
+    </menu>
+</menu-config>

@@ -1,0 +1,1 @@
+alter table CAMPAIGNPROJECT_BANNER_POSITION add column WEBSITE_ID uuid ;

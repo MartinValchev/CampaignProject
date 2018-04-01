@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.campaignproject.web.screens.Occupacyrecords"
+        messagesPack="com.company.campaignproject.web.screens">
+    <dsContext>
+        <collectionDatasource id="bannerPositionsDs"
+                              class="com.company.campaignproject.entity.BannerPosition"
+                              view="bannerPosition-view">
+            <query>
+                <![CDATA[select e from campaignproject$BannerPosition e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="bannerPositionOccupaciesDs"
+                              class="com.company.campaignproject.entity.BannerPositionOccupancy"
+                              datasourceClass="com.company.campaignproject.web.screens.BannerPositionOccupacyDatasource"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <vbox id="contentBox"
+              spacing="true">
+            <flowBox id="InputFieldsBox"
+                     spacing="true">
+                <lookupField id="bannerPosition"
+                             caption="Banner Position"
+                             nullOptionVisible="false"
+                             optionsDatasource="bannerPositionsDs"
+                             width="315px"/>
+            </flowBox>
+            <flowBox id="dateInputBox"
+                     spacing="true">
+                <dateField id="startDate"
+                           caption="Start Date"/>
+                <dateField id="endDate"
+                           caption="End Date"/>
+            </flowBox>
+            <flowBox id="OperationsButtonsBox"
+                     spacing="true">
+                <buttonsPanel>
+                    <button caption="Generate Occupacy"
+                            invoke="onGenerateBtnClick"/>
+                    <button action="occupancyGrid.excel"
+                            caption="Export to Excel"/>
+                </buttonsPanel>
+            </flowBox>
+            <dataGrid id="occupancyGrid"
+                      datasource="bannerPositionOccupaciesDs"
+                      height="350px"
+                      width="600px">
+                <actions>
+                    <action id="excel"/>
+                </actions>
+                <columns>
+                    <column caption="Day"
+                            property="occupacyDay"/>
+                    <column caption="Impressions Sum"
+                            property="impressionsSum"/>
+                    <column caption="Impressions Limit"
+                            editable="false"
+                            property="bannerPosition.impressionsLimit"/>
+                    <column caption="Percent"
+                            property="percentidge">
+                        <formatter class="com.company.campaignproject.web.screens.Occupacyrecords$PercentFormatter"/>
+                    </column>
+                </columns>
+            </dataGrid>
+            <button id="closeBtn"
+                    caption="Close"/>
+        </vbox>
+    </layout>
+</window>
