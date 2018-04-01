@@ -113,12 +113,30 @@ public class BannerPositionOccupacyServiceBean implements BannerPositionOccupacy
        item.setPercentidge(percentidge);
         return item;
     }
+    private List<BannerPositionOccupancy> generateEmptyOccupancyList(Date startDate, Date endDate, BannerPosition bannerPosition){
+        Date newEndDate = moveDate(endDate,1,"ADD");
+        List<BannerPositionOccupancy> emptyList = new ArrayList<>();
+        while(startDate.before(newEndDate)){
+            BannerPositionOccupancy newInstance = metadata.create(BannerPositionOccupancy.class);
+            newInstance.setBannerPosition(bannerPosition);
+            newInstance.setImpressionsSum(0);
+            newInstance.setPercentidge(0.0);
+            newInstance.setOccupacyDay(startDate);
+            emptyList.add(newInstance);
+            startDate = moveDate(startDate,1,"ADD");
+        }
+        return emptyList;
+    }
 
     @Override
     public void processOccupacyRequest(Date startDate, Date endDate, BannerPosition bannerPosition) {
         List<CampaignBannerPosition> dbList =loadCampaignBannerPositionEntries(startDate, endDate, bannerPosition);
-        fillOccupancyTree(startDate,endDate, dbList);
-        occupacyList = processOccupacyTree(startDate,endDate) ;
+        if(dbList !=null && dbList.size()>0){
+            fillOccupancyTree(startDate,endDate, dbList);
+            occupacyList = processOccupacyTree(startDate,endDate) ;
+        }else{
+            occupacyList= generateEmptyOccupancyList(startDate, endDate, bannerPosition);
+        }
 
     }
 
