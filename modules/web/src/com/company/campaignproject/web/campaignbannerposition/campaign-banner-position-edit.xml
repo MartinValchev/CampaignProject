@@ -34,8 +34,6 @@
                 <field property="endDate"/>
             </column>
         </fieldGroup>
-        <button caption="removeOccupacyRec"
-                invoke="onUpdateRecordBtnClick"/>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

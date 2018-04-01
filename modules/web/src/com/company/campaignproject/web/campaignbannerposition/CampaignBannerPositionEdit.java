@@ -12,15 +12,4 @@ import java.util.Collection;
 
 public class CampaignBannerPositionEdit extends AbstractEditor<CampaignBannerPosition> {
 
-    @Inject
-    @Named("bannerPositionOccupaciesDs")
-    GroupDatasource bannerPositionOccupaciesDs;
-    public void onUpdateRecordBtnClick(){
-        bannerPositionOccupaciesDs.refresh();
-       Collection<BannerPositionOccupacy> occupacyCollection = bannerPositionOccupaciesDs.getItems();
-        BannerPositionOccupacy bannerPositionOccupacy = occupacyCollection.iterator().next();
-        bannerPositionOccupacy.setImpressionsSum(4545);
-        bannerPositionOccupaciesDs.setItem(bannerPositionOccupacy);
-        bannerPositionOccupaciesDs.commit();
-    }
 }
