@@ -18,23 +18,27 @@
         </collectionDatasource>
     </dsContext>
     <dialogMode forceDialog="true"
-                height="800"
+                height="400"
                 width="600"/>
-    <layout expand="windowActions"
-            spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="campaignBannerPositionDs"
-                    width="450px">
-            <column width="300px">
-                <field caption="Banner position"
-                       optionsDatasource="bannerPositionsDs"
-                       property="bannerPosition"/>
-                <field property="impressions"/>
-                <field property="startDate"/>
-                <field property="endDate"/>
-            </column>
-        </fieldGroup>
+    <layout spacing="true">
+        <vbox height="100%"
+              spacing="true">
+            <fieldGroup id="fieldGroup"
+                        datasource="campaignBannerPositionDs"
+                        height="100%"
+                        width="100%">
+                <column width="300px">
+                    <field caption="Banner position"
+                           optionsDatasource="bannerPositionsDs"
+                           property="bannerPosition"/>
+                    <field property="impressions"/>
+                    <field property="startDate"/>
+                    <field property="endDate"/>
+                </column>
+            </fieldGroup>
+        </vbox>
         <frame id="windowActions"
+               align="BOTTOM_LEFT"
                screen="editWindowActions"/>
     </layout>
 </window>
