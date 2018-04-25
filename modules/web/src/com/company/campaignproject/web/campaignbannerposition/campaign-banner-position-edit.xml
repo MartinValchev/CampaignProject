@@ -3,7 +3,6 @@
         caption="msg://editorCaption"
         class="com.company.campaignproject.web.campaignbannerposition.CampaignBannerPositionEdit"
         datasource="campaignBannerPositionDs"
-        focusComponent="fieldGroup"
         messagesPack="com.company.campaignproject.web.campaignbannerposition">
     <dsContext>
         <datasource id="campaignBannerPositionDs"
@@ -23,19 +22,43 @@
     <layout spacing="true">
         <vbox height="100%"
               spacing="true">
-            <fieldGroup id="fieldGroup"
-                        datasource="campaignBannerPositionDs"
-                        height="100%"
-                        width="100%">
-                <column width="300px">
-                    <field caption="Banner position"
-                           optionsDatasource="bannerPositionsDs"
-                           property="bannerPosition"/>
-                    <field property="impressions"/>
-                    <field property="startDate"/>
-                    <field property="endDate"/>
-                </column>
-            </fieldGroup>
+            <grid id="content grid"
+                  height="100%"
+                  spacing="true">
+                <columns count="2"/>
+                <rows>
+                    <row>
+                        <label id="bannerPositionLabel"
+                               value="Banner position"/>
+                        <lookupField id="bannerPositionLookup"
+                                     datasource="campaignBannerPositionDs"
+                                     nullOptionVisible="false"
+                                     optionsDatasource="bannerPositionsDs"
+                                     property="bannerPosition"/>
+                    </row>
+                    <row>
+                        <label id="impressionsLabel"
+                               value="Impressions"/>
+                        <textField id="impressionsField"
+                                   datasource="campaignBannerPositionDs"
+                                   property="impressions"/>
+                    </row>
+                    <row>
+                        <label id="startDateLabel"
+                               value="Start date"/>
+                        <dateField id="startDateField"
+                                   datasource="campaignBannerPositionDs"
+                                   property="startDate"/>
+                    </row>
+                    <row>
+                        <label id="endDateLabel"
+                               value="End date"/>
+                        <dateField id="endDateField"
+                                   datasource="campaignBannerPositionDs"
+                                   property="endDate"/>
+                    </row>
+                </rows>
+            </grid>
         </vbox>
         <frame id="windowActions"
                align="BOTTOM_LEFT"
