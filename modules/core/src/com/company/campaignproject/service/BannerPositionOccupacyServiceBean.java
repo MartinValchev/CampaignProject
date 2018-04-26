@@ -27,9 +27,10 @@ public class BannerPositionOccupacyServiceBean implements BannerPositionOccupacy
     @Inject
     private DataManager dataManager;
 
-    private OccupancyTree occupancyTree;
+    private OccupancyTree occupancyTree =null;
     private List<BannerPositionOccupancy> occupacyList;
     private TreeNode root;
+    private BannerPosition currentBannerPosition;
 
     private Date moveDate(Date date ,int days,String operation){
         Calendar calendar = Calendar.getInstance();
@@ -46,7 +47,7 @@ public class BannerPositionOccupacyServiceBean implements BannerPositionOccupacy
     }
     private List<CampaignBannerPosition> loadCampaignBannerPositionEntries(Date startDate, Date endDate, BannerPosition bannerPosition){
         List<CampaignBannerPosition> resultList =null;
-
+        currentBannerPosition=bannerPosition;
         LoadContext<CampaignBannerPosition> loadContext = LoadContext.create(CampaignBannerPosition.class)
                 .setQuery(LoadContext.createQuery("select e from campaignproject$CampaignBannerPosition e where e.bannerPosition.id =:bannerPositionId and e.startDate <=:inputEndDate AND e.endDate >=:inputStartDate").setParameter("bannerPositionId",bannerPosition.getId())
                         .setParameter("inputEndDate", endDate).setParameter("inputStartDate", startDate)).setView("campaignBannerPosition-view");
@@ -96,21 +97,33 @@ public class BannerPositionOccupacyServiceBean implements BannerPositionOccupacy
     private BannerPositionOccupancy constructBannerPositionOccupacyInstance(OccupancyMap occupancyMap){
         BannerPositionOccupancy item = metadata.create(BannerPositionOccupancy.class);
         List<CampaignBannerPosition> campaignBannerPositionList = occupancyMap.getValue();
-        BannerPosition bannerPosition =  campaignBannerPositionList.get(0).getBannerPosition();
-        item.setBannerPosition(bannerPosition);
-        Date itemDate = occupancyMap.getKey();
-        item.setOccupacyDay(itemDate);
-        int impressionsSum = 0;
-        double percentidge=0;
-       for(CampaignBannerPosition instance: campaignBannerPositionList){
-           impressionsSum += instance.getImpressions();
-       }
-       if(impressionsSum>0){
-           int impressionsLimit = bannerPosition.getImpressionsLimit();
-           percentidge = ((double)impressionsSum/impressionsLimit)*100;
-       }
-       item.setImpressionsSum(impressionsSum);
-       item.setPercentidge(percentidge);
+        if(campaignBannerPositionList.size()>0) {
+            BannerPosition bannerPosition = campaignBannerPositionList.get(0).getBannerPosition();
+            item.setBannerPosition(bannerPosition);
+            Date itemDate = occupancyMap.getKey();
+            item.setOccupacyDay(itemDate);
+            int impressionsSum = 0;
+            double percentidge = 0;
+            for (CampaignBannerPosition instance : campaignBannerPositionList) {
+                impressionsSum += instance.getImpressions();
+            }
+            if (impressionsSum > 0) {
+                int impressionsLimit = bannerPosition.getImpressionsLimit();
+                percentidge = ((double) impressionsSum / impressionsLimit) * 100;
+            }
+            item.setImpressionsSum(impressionsSum);
+            item.setPercentidge(percentidge);
+        }else{
+            //construct empty occupancy record
+            BannerPosition bannerPosition =currentBannerPosition;
+            item.setBannerPosition(bannerPosition);
+            Date itemDate = occupancyMap.getKey();
+            item.setOccupacyDay(itemDate);
+            int impressionsSum = 0;
+            double percentidge = 0;
+            item.setImpressionsSum(impressionsSum);
+            item.setPercentidge(percentidge);
+        }
         return item;
     }
     private List<BannerPositionOccupancy> generateEmptyOccupancyList(Date startDate, Date endDate, BannerPosition bannerPosition){
